@@ -1,17 +1,17 @@
 import React from "react";
 
 import { Button, Grid, Box, Select, MenuItem } from "@material-ui/core";
-import CustomDrawerComponents from "../../Components/Admin/Drawer";
+import CustomDrawerComponents from "../../../Components/Admin/Drawer";
 
 import AddIcon from "@material-ui/icons/Add";
-import CustomStudentTableComponents from "../../Components/Admin/StudentTable";
+import CustomStudentTableComponents from "../../../Components/Admin/StudentTable";
 
 export default function StudentManagementPage(props) {
   const [selectClass, setSelectClass] = React.useState(1);
   return (
     <>
       <CustomDrawerComponents>
-        <Box mx={8} my={6}>
+        <Box mx={2} my={4}>
           <Grid container spacing={4} justifyContent="space-between" alignItems="center">
             <Grid item md={2} sm={8} lg={2} xs={12}>
               <Button

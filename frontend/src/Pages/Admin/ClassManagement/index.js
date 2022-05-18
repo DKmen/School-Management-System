@@ -1,14 +1,14 @@
 import { Button, Grid, Box } from "@material-ui/core";
-import CustomDrawerComponents from "../../Components/Admin/Drawer";
+import CustomDrawerComponents from "../../../Components/Admin/Drawer";
 
 import AddIcon from "@material-ui/icons/Add";
-import CustomNoticeTableComponents from "../../Components/Admin/NoticeTable";
+import CustomClassTableComponents from "../../../Components/Admin/ClassTable";
 
-export default function NoticeBordPage(props) {
+export default function ClassManagementPage(props) {
   return (
     <>
       <CustomDrawerComponents>
-        <Box mx={8} my={6}>
+        <Box mx={2} my={4}>
           <Grid container spacing={4}>
             <Grid item md={2} sm={8} lg={2} xs={12}>
               <Button
@@ -17,11 +17,11 @@ export default function NoticeBordPage(props) {
                 startIcon={<AddIcon />}
                 fullWidth
               >
-                Add Notices
+                Add Class
               </Button>
             </Grid>
             <Grid item md={12} sm={12} lg={12} xs={12}>
-              <CustomNoticeTableComponents />
+              <CustomClassTableComponents />
             </Grid>
           </Grid>
         </Box>
