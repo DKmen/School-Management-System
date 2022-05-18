@@ -15,11 +15,7 @@ export default function CustomExamTable(props) {
   const [showModal, setShowModal] = React.useState(false);
   const [currentExam, setCurrentExam] = React.useState({});
   return (
-    <Box
-      my={2}
-      p={1}
-      maxHeight={Dimensions.get("screen").height * 0.6}
-    >
+    <Box my={2} p={1} maxHeight={Dimensions.get("screen").height * 0.6}>
       <ScrollView>
         <ScrollView horizontal>
           <Box flexDir="column">
@@ -58,10 +54,14 @@ export default function CustomExamTable(props) {
                     <Text fontSize="md">{index + 1}</Text>
                   </Box>
                   <Box w={150} alignItems="center">
-                    <Text fontSize="md">{item.startDate}</Text>
+                    <Text fontSize="md">
+                      {item.startDate.toLocaleDateString()}
+                    </Text>
                   </Box>
                   <Box w={100} alignItems="center">
-                    <Text fontSize="md">{item.endDate}</Text>
+                    <Text fontSize="md">
+                      {item.endDate.toLocaleDateString()}
+                    </Text>
                   </Box>
                   <Box w={100} alignItems="center">
                     <Text fontSize="md">{item.class}</Text>
@@ -137,13 +137,15 @@ export default function CustomExamTable(props) {
                             <Text fontSize="md">{index + 1}</Text>
                           </Box>
                           <Box w={150} alignItems="center">
-                            <Text fontSize="md">{item.startTime}</Text>
+                            <Text fontSize="md">{`${item.startTime.getHours()}:${item.startTime.getMinutes()}`}</Text>
                           </Box>
                           <Box w={100} alignItems="center">
-                            <Text fontSize="md">{item.endTime}</Text>
+                            <Text fontSize="md">{`${item.endTime.getHours()}:${item.endTime.getMinutes()}`}</Text>
                           </Box>
                           <Box w={100} alignItems="center">
-                            <Text fontSize="md">{item.date}</Text>
+                            <Text fontSize="md">
+                              {item.date.toLocaleDateString()}
+                            </Text>
                           </Box>
                           <Box w={150} alignItems="center">
                             <Text fontSize="md">{item.subject}</Text>

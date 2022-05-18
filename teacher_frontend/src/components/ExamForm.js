@@ -21,6 +21,7 @@ export default function CustomExamForm(props) {
   const [displayStartDate, setDisplayStartDate] = React.useState(false);
   const [endDate, setEndDate] = React.useState("");
   const [displayEndDate, setDisplayEndDate] = React.useState(false);
+  const [examClass, setExamClass] = React.useState("");
 
   const [exams, setExams] = React.useState([]);
   const [displayExams, setDisplayExam] = React.useState(false);
@@ -63,6 +64,7 @@ export default function CustomExamForm(props) {
                       ),
                     }}
                     mt={1}
+                    onValueChange={(item) => setExamClass(item)}
                   >
                     <Select.Item label="Class 1" value={1} />
                     <Select.Item label="Class 2" value={2} />
@@ -140,7 +142,23 @@ export default function CustomExamForm(props) {
               </FormControl>
             </Modal.Body>
             <Modal.Footer>
-              <Button onPress={(_) => props.formOpen(false)}>Save Exam</Button>
+              <Button
+                onPress={(_) => {
+                  props.addExams([
+                    ...props.data,
+                    {
+                      startDate,
+                      endDate,
+                      class: examClass,
+                      prepareBy: "Martin Parmer",
+                      exams,
+                    },
+                  ]);
+                  props.formOpen(false);
+                }}
+              >
+                Save Exam
+              </Button>
             </Modal.Footer>
           </ScrollView>
         </Modal.Content>
@@ -281,7 +299,6 @@ export default function CustomExamForm(props) {
 }
 
 function CustomExamTable(props) {
-  console.log(props);
   return (
     <ScrollView horizontal>
       <Box flexDir="column">
