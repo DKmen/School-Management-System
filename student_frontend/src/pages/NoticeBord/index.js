@@ -8,22 +8,19 @@ import CustomNoticeData from "../../components/Notice";
 
 export default function NoticeBordPage() {
   return (
-    <Box safeArea>
-      <CustormAppbar />
-      <Box p={2}>
-        <ScrollView>
-          <Box px={2} height={550}>
-            <ScrollView>
-              <CustomNoticeData
-                date="12-02-2022"
-                details="Ex sunt in aliquip quis proident nostrud officia fugiat sunt
+    <Box p={2}>
+      <ScrollView>
+        <Box px={2} height={550}>
+          <ScrollView>
+            <CustomNoticeData
+              date="12-02-2022"
+              details="Ex sunt in aliquip quis proident nostrud officia fugiat sunt
               consectetur sit aliquip do consectetur. Exercitation enim amet"
-                source="Admin"
-              />
-            </ScrollView>
-          </Box>
-        </ScrollView>
-      </Box>
+              source="Admin"
+            />
+          </ScrollView>
+        </Box>
+      </ScrollView>
     </Box>
   );
 }

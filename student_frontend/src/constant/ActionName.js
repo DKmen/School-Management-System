@@ -1,0 +1,5 @@
+export const FETCH_STUDENT = "FETCH_STUDENT";
+export const FETCH_EXAMS = "FETCH_EXAMS";
+export const FETCH_RESULT = "FETCH_EXAMS";
+export const FETCH_NOTICE = "FETCH_NOTICE";
+export const FETCH_CLASS_NOTES = "FETCH_CLASS_NOTES";

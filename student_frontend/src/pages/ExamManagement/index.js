@@ -9,13 +9,10 @@ export default function ExamManagementPage() {
   const [Exams, setExams] = React.useState([]);
 
   return (
-    <Box safeArea>
-      <CustormAppbar />
-      <Box p={2}>
-        <ScrollView>
-          <CustomExamTable exam={Exams} />
-        </ScrollView>
-      </Box>
+    <Box p={2}>
+      <ScrollView>
+        <CustomExamTable exam={Exams} />
+      </ScrollView>
     </Box>
   );
 }

@@ -4,7 +4,8 @@ import { Avatar, Box, IconButton, Text } from "native-base";
 
 import { Feather } from "@expo/vector-icons";
 
-export default function CustormAppbar() {
+export default function CustormAppbar(props) {
+  console.log(props)
   return (
     <Box
       px={4}
