@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Box, Button, ScrollView, Text } from "native-base";
+import { Box, Button, Text } from "native-base";
+import { Dimensions, ScrollView, RefreshControl } from "react-native";
 
 import CustormAppbar from "../../components/Appbar";
 
@@ -11,7 +12,7 @@ export default function NoticeBordPage() {
     <Box p={2}>
       <ScrollView>
         <Box px={2} height={550}>
-          <ScrollView>
+          <ScrollView refreshControl={<RefreshControl />}>
             <CustomNoticeData
               date="12-02-2022"
               details="Ex sunt in aliquip quis proident nostrud officia fugiat sunt

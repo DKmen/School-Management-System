@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Box, ScrollView, Text } from "native-base";
-import { Dimensions } from "react-native";
+import { Box, Text } from "native-base";
+import { Dimensions, ScrollView, RefreshControl } from "react-native";
 
 import CustormAppbar from "../../components/Appbar";
 
@@ -16,7 +16,7 @@ export default function ProfileManagementPage() {
         borderColor="blue.300"
         borderRadius={6}
       >
-        <ScrollView>
+        <ScrollView refreshControl={<RefreshControl />}>
           <Box flexDir="row">
             <Text w="50%" borderWidth={1} p={4} fontSize="md">
               Student Name

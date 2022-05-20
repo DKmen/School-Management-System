@@ -1,6 +1,7 @@
 import React from "react";
 
-import { Box, Button, ScrollView } from "native-base";
+import { Box, Button } from "native-base";
+import { Dimensions, ScrollView, RefreshControl } from "react-native";
 
 import CustormAppbar from "../../components/Appbar";
 import CustomExamTable from "../../components/ExamTable";
@@ -10,7 +11,7 @@ export default function ExamManagementPage() {
 
   return (
     <Box p={2}>
-      <ScrollView>
+      <ScrollView refreshControl={<RefreshControl />}>
         <CustomExamTable exam={Exams} />
       </ScrollView>
     </Box>

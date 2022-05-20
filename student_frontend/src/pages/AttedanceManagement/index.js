@@ -1,12 +1,11 @@
 import React from "react";
 
-import { Box, ScrollView, Text } from "native-base";
-import { Dimensions } from "react-native";
-
-import CustormAppbar from "../../components/Appbar";
+import { Box, Text } from "native-base";
+import { Dimensions, ScrollView, RefreshControl } from "react-native";
 
 export default function AttedanceManagementPage() {
   return (
+    <ScrollView refreshControl={<RefreshControl />}>
       <Box p={2}>
         <Box
           h={Dimensions.get("window").height * 0.8}
@@ -62,5 +61,6 @@ export default function AttedanceManagementPage() {
           </ScrollView>
         </Box>
       </Box>
+    </ScrollView>
   );
 }
