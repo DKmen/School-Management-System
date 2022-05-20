@@ -2,16 +2,13 @@ import React from "react";
 
 import { Box, Button, ScrollView, Text } from "native-base";
 
-import CustormAppbar from "../../components/Appbar";
-
 import CustomNoticeData from "../../components/Notice";
 import CustomNoticeBordForm from "../../components/NoticeForm";
 
 export default function NoticeBordPage() {
   const [openNoticeForm, setOpenNoticeForm] = React.useState(false);
   return (
-    <Box safeArea>
-      <CustormAppbar />
+    <Box>
       <Box p={2}>
         <ScrollView>
           <Button

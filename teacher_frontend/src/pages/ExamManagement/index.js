@@ -2,17 +2,15 @@ import React from "react";
 
 import { Box, Button, ScrollView } from "native-base";
 
-import CustormAppbar from "../../components/Appbar";
 import CustomExamTable from "../../components/ExamTable";
 import CustomExamForm from "../../components/ExamForm";
 
 export default function ExamManagementPage() {
   const [openExamForm, setOpenExamForm] = React.useState(false);
   const [Exams, setExams] = React.useState([]);
-  
+
   return (
-    <Box safeArea>
-      <CustormAppbar />
+    <Box>
       <Box p={2}>
         <ScrollView>
           <Box my={2}>

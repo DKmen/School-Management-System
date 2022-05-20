@@ -1,10 +1,12 @@
 import React from "react";
 
-import { Box, Button, ScrollView, Select, Text, TextArea } from "native-base";
-
+import { Box, Button, ScrollView, Select } from "native-base";
+import { Dimensions } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-export default function ClassManagementPage() {
+import CustormStudentTable from "../../components/StudentTable";
+
+export default function StudentManagementPage() {
   return (
     <Box>
       <Box p={2}>
@@ -41,18 +43,11 @@ export default function ClassManagementPage() {
               <Select.Item label="Physics" value={3} />
             </Select>
           </Box>
-          <Box my={2}>
-            <TextArea placeholder="Enter material Details" h={100} />
+          <Box my={2} h={Dimensions.get("window").height * 0.6}>
+            <CustormStudentTable />
           </Box>
-          <Box my={2}>
-            <Button variant="outline" colorScheme="primary" mb={2}>
-              Uplode File
-            </Button>
-          </Box>
-          <Box my={2}>
-            <Button variant="outline" colorScheme="primary" mb={2}>
-              Save
-            </Button>
+          <Box>
+            <Button>Save Attedance</Button>
           </Box>
         </ScrollView>
       </Box>

@@ -9,10 +9,10 @@ import CustomNoticeData from "../../components/Notice";
 
 export default function NoticeBordPage() {
   return (
-    <Box p={2}>
-      <ScrollView>
+    <ScrollView refreshControl={<RefreshControl />}>
+      <Box p={2}>
         <Box px={2} height={550}>
-          <ScrollView refreshControl={<RefreshControl />}>
+          <ScrollView>
             <CustomNoticeData
               date="12-02-2022"
               details="Ex sunt in aliquip quis proident nostrud officia fugiat sunt
@@ -21,7 +21,7 @@ export default function NoticeBordPage() {
             />
           </ScrollView>
         </Box>
-      </ScrollView>
-    </Box>
+      </Box>
+    </ScrollView>
   );
 }
