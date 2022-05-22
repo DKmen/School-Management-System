@@ -138,12 +138,26 @@ module.exports = {
     deleteNoticeByTeacher: async (req, res) => {
         try {
             const { id } = req.params;
+<<<<<<< HEAD
             const notice = await Notice.findOneAndDelete({_id:id,Creator_Id : req.teacher._id})
             // await Notice.findByIdAndDelete(id); //update with teaher auth
             return req.status(200).json({
                 error: false,
                 message: "Notice deleted successfully."
             });
+=======
+           const hello = await Notice.findOneAndDelete({_id:id,Creator_Id: req.teacher._id})
+           if(!hello){
+               return res.status(400).json({
+                   error: true,
+                   message: "Notice doesn't exist or you are not creator."
+               });
+            }
+        return res.status(200).json({
+            error: false,
+            message: "Notice deleted successfully."
+        });
+>>>>>>> 45886747f2cacb69b6d6a34f71ecf920839cb6f0
         } catch (error) {
             let errMsg = getError(error)
             return res.status(400).json({
@@ -203,7 +217,11 @@ module.exports = {
         }
         try {
             const { id } = req.params;
+<<<<<<< HEAD
             const notice = await Notice.find({_id:id,Creator_Id:req.teacher._id});
+=======
+            const notice = await Notice.findOne({_id:id,Creator_Id:req.teacher._id});
+>>>>>>> 45886747f2cacb69b6d6a34f71ecf920839cb6f0
             // const notice = await Notice.findById(id);
 
             if (!notice) {
@@ -214,7 +232,11 @@ module.exports = {
             }
 
             updates.forEach((update) => notice[update] = req.body[update])
+<<<<<<< HEAD
             await notice.save()
+=======
+            const not =await notice.save();
+>>>>>>> 45886747f2cacb69b6d6a34f71ecf920839cb6f0
             return res.status(200).json({
                 error: false,
                 message: "Exam updated.",
