@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
-const expencesSchema = new mongoose.Schema({
+const financeSchema = new mongoose.Schema({
     date:{
         type: Date,
-        default: Date.now,
+        default: Date.now(),
         required: true,
     },
     description:{
@@ -27,6 +27,6 @@ const expencesSchema = new mongoose.Schema({
 },{
     timestamps: true
 })
-const Expences = mongoose.model('Expences', expencesSchema);
+const Finance = mongoose.model('Finance', financeSchema);
 
-module.exports = Expences
+module.exports = Finance

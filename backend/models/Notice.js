@@ -26,13 +26,6 @@ const noticeSchema = new mongoose.Schema({
 }, {
     timestamps: true
 })
-
-noticeSchema.methods.addClass(classid) = async function(){
-    const notice = this
-    notice.Classes_Id = notice.Classes_Id.concat({classid});
-    await notice.save()
-    return classid
-}
 const Notice = mongoose.model('Notice', noticeSchema);
 
 module.exports = Notice

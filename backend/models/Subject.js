@@ -1,22 +1,21 @@
 const mongoose = require('mongoose')
-
 const subjectSchema = new mongoose.Schema({
     Subject_Name:{
         type: String,
         required: true,
+    },
+    Class_Id:{
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref:'Class'
     }
 },{
     timestamps: true
 })
-subjectSchema.virtual('class', {
-    ref: 'Class',
-    localField: '_id',
-    foreignField: 'Subject_Id'
-})
-subjectSchema.virtual('teacher', {
+subjectSchema.virtual('teachers', {
     ref: 'Teacher',
     localField: '_id',
-    foreignField: 'Subject_Id'
+    foreignField: 'Subjects_Id.Subject_Id'
 })
 const Subject = mongoose.model('Subject', subjectSchema);
 

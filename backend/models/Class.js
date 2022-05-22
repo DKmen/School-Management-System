@@ -4,19 +4,12 @@ const classSchema = new mongoose.Schema({
     Std_Name: {
         type: String,
         unique: true,
-        required: true,
+        required: [true, "Please enter standard name"],
     },
     Fees_Per_Student: {
         type: Number,
-        required: true,
-    },
-    Subjects_Id: [{
-        Subject_Id:{
-            type: mongoose.Schema.Types.ObjectId,
-            required: false,
-            ref: 'Subject'
-        }
-    }],
+        required: [true, "Please enter fees"],
+    }
 }, {
     timestamps: true
 })
