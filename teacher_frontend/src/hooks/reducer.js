@@ -51,6 +51,17 @@ const Login = (state = false, action) => {
     }
 }
 
+const Exams = (state = [], action) => {
+    switch (action.type) {
+        case Actions.EXAM_FETCH:
+            return action.paylode;
+        case Actions.EXAM_ADD:
+            return [action.paylode, ...state];
+        default:
+            return state;
+    }
+}
+
 export default combineReducers({
     Login,
     Teacher,

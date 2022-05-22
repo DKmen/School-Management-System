@@ -12,6 +12,7 @@ function LoginPage(props) {
     const [password, setPassword] = React.useState("");
 
     const LoginInApp = async () => {
+        console.log('ererer')
         await props.login(UserName, password);
         props.navigation.navigate("Home");
     };

@@ -28,7 +28,7 @@ const examSchema = mongoose.Schema({
             },
             endTime : {
                 type : String,
-                required : [true, "End is required"]
+                required : [true, "End time is required"]
             },
             date : {
                 type : Date,
