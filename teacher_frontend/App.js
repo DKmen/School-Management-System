@@ -1,35 +1,36 @@
 import React from "react";
 import "react-native-gesture-handler";
 import { NativeBaseProvider, Box } from "native-base";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-import { NavigationContainer } from "@react-navigation/native";
 
-import NoticeBordPage from "./src/pages/NoticeBord";
-import ClassManagementPage from "./src/pages/ClassManagement";
-import ExamManagementPage from "./src/pages/ExamManagement";
-import StudentManagementPage from "./src/pages/StudentManagement";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import reducers from "./src/hooks/reducer";
+
+import DrawerScreen from "./src/pages";
+import LoginPage from "./src/pages/LoginScreen";
+
+const store = createStore(reducers, applyMiddleware(thunk));
 
 export default function App() {
-  const Drawer = createDrawerNavigator();
+  const Stack = createNativeStackNavigator();
   return (
-    <NativeBaseProvider>
-      <NavigationContainer>
-        <Drawer.Navigator initialRouteName="Notice Bord">
-          <Drawer.Screen name="Notice Bord" component={NoticeBordPage} />
-          <Drawer.Screen
-            name="Exam Management"
-            component={ExamManagementPage}
-          />
-          <Drawer.Screen
-            name="Class Management"
-            component={ClassManagementPage}
-          />
-          <Drawer.Screen
-            name="Student Management"
-            component={StudentManagementPage}
-          />
-        </Drawer.Navigator>
-      </NavigationContainer>
-    </NativeBaseProvider>
+    <Provider store={store} >
+      <NativeBaseProvider>
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Login">
+            <Stack.Screen name="Home" options={{
+              headerShown: false
+            }} component={DrawerScreen} />
+            <Stack.Screen name="Login" options={{
+              headerTitleAlign: 'center'
+            }} component={LoginPage} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </NativeBaseProvider>
+    </Provider>
   );
 }

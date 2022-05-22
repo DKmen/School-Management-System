@@ -1,31 +1,31 @@
 const mongoose = require('mongoose');
 
 const materialSchema = mongoose.Schema({
-    materialID : {
-        type : String,
-        unique : true,
-        required : true
-    },
     class : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Class"
+        ref : "Class",
+        required : [true, "Class is required"]
     },
     subject : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Subject"
+        ref : "Subject",
+        required : [true, "Subject is required"]
     },
     details : {
         type : String
     },
     fileName : {
-        type : String
+        type : String,
+        required : [true, "File name is required"]
     },
     fileData : {
-        type : String
+        type : String,
+        required : [true, "File data is required"]
     },
     teacher : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Teacher"
+        ref : "Teacher",
+        required : [true, "Teacher is required"]
     }
 });
 

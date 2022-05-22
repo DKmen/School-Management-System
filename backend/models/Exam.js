@@ -1,45 +1,43 @@
 const mongoose = require('mongoose');
 
 const examSchema = mongoose.Schema({
-    ExamID : {
-        type : String,
-        required : true
-    },
+    
     teacher : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Teacher",
-        required : true
+        required : [true, "Teacher is required"]
     },
     class : {
         type : mongoose.Schema.Types.ObjectId,
         ref : "Class",
-        required : true
+        required : [true, "Class is required"]
     },
     startDate : {
         type : Date,
-        required : true
+        required : [true, "Start date is required"]
     },
     endtDate : {
         type : Date,
-        required : true
+        required : [true, "End is required"]
     },
     exams : [
         {
             startTime : {
                 type : String,
-                required : true
+                required : [true, "Start time is required"]
             },
             endTime : {
                 type : String,
-                required : true
+                required : [true, "End is required"]
             },
             date : {
                 type : Date,
-                required : true
+                required : [true, "Date is required"]
             },
             subject : {
                 type : mongoose.Schema.Types.ObjectId,
-                ref : "Subject"
+                ref : "Subject",
+                required : [true, "Subject is required"]
             }
         }
     ]

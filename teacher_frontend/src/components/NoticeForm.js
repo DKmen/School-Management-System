@@ -11,10 +11,22 @@ import {
   Button,
 } from "native-base";
 import { Dimensions } from "react-native";
+import { connect } from "react-redux";
+
+import * as Actions from "../hooks/action";
 
 import { AntDesign } from "@expo/vector-icons";
 
-export default function CustomNoticeBordForm(props) {
+function CustomNoticeBordForm(props) {
+
+  const [NoticeTitle, setNoticeTitle] = React.useState("");
+  const [NoticeDetails, setNoticeDetails] = React.useState("");
+  const [Class, setClass] = React.useState("");
+
+  React.useEffect(() => {
+    props.fetchClass();
+  }, [])
+
   return (
     <Center>
       <Modal
@@ -29,11 +41,11 @@ export default function CustomNoticeBordForm(props) {
             <ScrollView>
               <FormControl>
                 <FormControl.Label>Notice Title</FormControl.Label>
-                <Input />
+                <Input onChangeText={(text) => setNoticeTitle(text)} />
               </FormControl>
               <FormControl>
                 <FormControl.Label>Notice Details</FormControl.Label>
-                <TextArea />
+                <TextArea onChangeText={(text) => setNoticeDetails(text)} />
               </FormControl>
               <FormControl>
                 <FormControl.Label>Select Class</FormControl.Label>
@@ -41,6 +53,7 @@ export default function CustomNoticeBordForm(props) {
                   minWidth="200"
                   accessibilityLabel="Class"
                   placeholder="Select Class"
+                  onValueChange={(value) => setClass(value)}
                   _selectedItem={{
                     bg: "teal.600",
                     endIcon: (
@@ -49,9 +62,9 @@ export default function CustomNoticeBordForm(props) {
                   }}
                   mt={1}
                 >
-                  <Select.Item label="Class 1" value={1} />
-                  <Select.Item label="Class 2" value={2} />
-                  <Select.Item label="Class 3" value={3} />
+                  {props?.data.Class.map((item) => {
+                    return <Select.Item label={item.Std_Name} value={item._id} />
+                  })}
                 </Select>
               </FormControl>
               <FormControl mt={4}>
@@ -60,6 +73,15 @@ export default function CustomNoticeBordForm(props) {
                   colorScheme="primary"
                   mb={2}
                   onPress={(_) => {
+                    props.createNotice({
+                      "Notice_Title": NoticeTitle,
+                      "Notice_Details": NoticeDetails,
+                      "Classes_Id": [
+                        {
+                          "Class_Id": Class
+                        }
+                      ]
+                    })
                     props.formOpen(false);
                   }}
                 >
@@ -73,3 +95,18 @@ export default function CustomNoticeBordForm(props) {
     </Center>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    data: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchClass: () => dispatch(Actions.FetchClass()),
+    createNotice: (data) => dispatch(Actions.CreateNotice(data))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomNoticeBordForm);

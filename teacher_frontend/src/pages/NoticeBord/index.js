@@ -1,40 +1,79 @@
 import React from "react";
 
-import { Box, Button, ScrollView, Text } from "native-base";
+import { Box, Button } from "native-base";
+import { ScrollView, RefreshControl } from "react-native";
+import { connect } from "react-redux";
+
+import * as Actions from "../../hooks/action";
 
 import CustomNoticeData from "../../components/Notice";
 import CustomNoticeBordForm from "../../components/NoticeForm";
 
-export default function NoticeBordPage() {
+function NoticeBordPage(props) {
   const [openNoticeForm, setOpenNoticeForm] = React.useState(false);
+
+  React.useState(() => {
+    props.fetchNotice();
+    if (!props.data.Login) props.navigation.navigate("Login");
+  }, []);
+
+  const openForm = () => {
+    setOpenNoticeForm(true);
+  }
+
   return (
-    <Box>
-      <Box p={2}>
-        <ScrollView>
+    <ScrollView
+      refreshControl={
+        <RefreshControl
+          refreshing={props.data.Loading}
+          onRefresh={() => props.fetchNotice()}
+        />
+      }
+    >
+      <Box>
+        <Box p={2}>
           <Button
             variant="outline"
             colorScheme="primary"
             mb={2}
-            onPress={(_) => setOpenNoticeForm(true)}
+            onPress={openForm}
           >
             Add Notice
           </Button>
           <Box px={2} height={550}>
             <ScrollView>
-              <CustomNoticeData
-                date="12-02-2022"
-                details="Ex sunt in aliquip quis proident nostrud officia fugiat sunt
-              consectetur sit aliquip do consectetur. Exercitation enim amet"
-                source="Admin"
-              />
+              {props?.data?.Notice.map((item) => {
+                return (
+                  <CustomNoticeData
+                    title={item.Notice_Title}
+                    date={item.createdAt || `${new Date().toUTCString()}`}
+                    details={item.Notice_Details}
+                    source={item?.Creator_Id?.Teacher_Name || `${props.data.Teacher.Teacher_Name}`}
+                  />
+                );
+              })}
             </ScrollView>
           </Box>
-        </ScrollView>
+        </Box>
+        <CustomNoticeBordForm
+          formOpen={setOpenNoticeForm}
+          isOpen={openNoticeForm}
+        />
       </Box>
-      <CustomNoticeBordForm
-        formOpen={setOpenNoticeForm}
-        isOpen={openNoticeForm}
-      />
-    </Box>
+    </ScrollView>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    data: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchNotice: () => dispatch(Actions.FetchNotice()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NoticeBordPage);

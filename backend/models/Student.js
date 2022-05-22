@@ -1,6 +1,6 @@
-const { pad } = require('lodash');
 const mongoose = require('mongoose');
-const Class = require('./Class.js');
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
 
 const studentSchema = mongoose.Schema({
     studentID : {
@@ -10,59 +10,95 @@ const studentSchema = mongoose.Schema({
         trim : true
     },
     studentName : {
-        type : String
+        type : String,
+        required : [true, "Student name is required"]
     },
     fatherName : {
-        type : String
+        type : String,
+        required : [true, "Father name is required"]
     },
     address : {
-        houseNo : {
-            type : String
-        },
-        location : {
-            type : String
-        },
-        landmark : {
-            type : String
-        },
-        city : {
-            type : String
-        },
-        state : {
-            type : String
-        },
-        pincode : {
-            type : String
-        }
+        type : String,
+        required : [true, "Address is required"]
     },
     phoneNumber : {
-        type : String
+        type : String,
+        required : [true, "Phone number is required"],
+        validate(value) {
+            const regex = /^[6-9]\d{9}$/
+            if (regex.test(value) === false) {
+                throw new Error('Invalid phone number')
+            }
+        }
     },
     password : {
-        type : String
+        type : String,
+        minLength : [7,"Password is too short"],
+        maxLength : [100,"Password is too long"],
+        required : [true, "Password is required"]
     },
     attendence : [
         {
             subjectID : {
                 type : mongoose.Schema.Types.ObjectId,
                 ref : "Subject"
+            },
+            present : {
+                type : Boolean,
+                default : false
             }
         }
     ],
     class : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "Class"
+        ref : "Class",
+        required : [true, "Class is required"]
     },
     pendingFees : {
         type : Number
-    }
+    },
+    tokens: [{
+        token: {
+            type: String,
+            required: true
+        }
+    }]
+},{
+    timestamps: true
 });
+studentSchema.methods.generateAuthToken = async function () {
+    const student = this
 
-studentSchema.methods = {
-    calculateFees : function (paidFees) {
-        this.pendingFees = Class.feesPerStudent - paidFees;
-    }
+    const token = jwt.sign({ _id: student._id.toString() }, "thisisSchool")
+    student.tokens = student.tokens.concat({ token })
+    await student.save()
+    return token
 }
+
+studentSchema.statics.findByCredentials = async (studentID, password) => {
+    const student = await Student.findOne({ studentID })
+
+    if (!student) {
+        throw new Error('Unable to login')
+    }
+
+    const isMatch = await bcrypt.compare(password, student.password)
+
+    if (!isMatch) {
+        throw new Error('Unable to login')
+    }
+
+    return student
+}
+studentSchema.pre('save', function (next) {
+    var student = this;
+    if (!student.isModified('password')) return next();
+    bcrypt.hash(student.password, 10, function(err, hash) {
+        if (err) return next(err);
+        student.password = hash;
+        next();
+    });
+})
 
 const Student = mongoose.model('Student', studentSchema);
 

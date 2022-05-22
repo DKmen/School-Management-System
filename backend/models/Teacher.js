@@ -2,8 +2,6 @@ const mongoose = require('mongoose')
 const validator = require('validator')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const Subject = require('./Subject')
-const Class = require('./class')
 
 const teacherSchema = new mongoose.Schema({
     Teacher_Name: {
@@ -43,14 +41,6 @@ const teacherSchema = new mongoose.Schema({
             ref: 'Subject'
         }
     }],
-    Classes_Id: [
-        {
-            Class_Id: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: 'Class'
-            }
-        }],
     tokens: [{
         token: {
             type: String,
@@ -67,19 +57,19 @@ teacherSchema.virtual('notice', {
     foreignField: 'Teacher_Id'
 })
 
-teacherSchema.methods.addClass(classid) = async function(){
-    const teacher = this
-    teacher.Classes_Id = teacher.Classes_Id.concat({classid});
-    await teacher.save()
-    return classid
-}
+// teacherSchema.methods.addClass(classid) = async function(){
+//     const teacher = this
+//     teacher.Classes_Id = teacher.Classes_Id.concat({classid});
+//     await teacher.save()
+//     return classid
+// }
 
-teacherSchema.methods.addSubject(subjectid) = async function(){
-    const teacher = this
-    teacher.Subjects_Id = teacher.Subjects_Id.concat({subjectid});
-    await teacher.save()
-    return subjectid
-}
+// teacherSchema.methods.addSubject(subjectid) = async function(){
+//     const teacher = this
+//     teacher.Subjects_Id = teacher.Subjects_Id.concat({subjectid});
+//     await teacher.save()
+//     return subjectid
+// }
 
 teacherSchema.methods.toJSON = function () {
     const teacher = this
@@ -93,11 +83,9 @@ teacherSchema.methods.toJSON = function () {
 
 teacherSchema.methods.generateAuthToken = async function () {
     const teacher = this
-    const token = jwt.sign({ _id: teacher._id.toString() }, process.env.JWT_SECRET)
-
+    const token = jwt.sign({ _id: teacher._id.toString() }, "thisisSchool")
     teacher.tokens = teacher.tokens.concat({ token })
     await teacher.save()
-
     return token
 }
 
