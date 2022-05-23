@@ -18,36 +18,33 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 
-export default function CustomExamTableComponents(props) {
+export default function ExamTimeTableComponents(props) {
   const [Exams, setExams] = useState([
     {
-      startDate: "12-03-2022",
-      endDate: "12-03-2022",
-      class: 4,
-      scheduleBy: "Martin Parmar",
-      exams: [{}],
+        startTime: "12:00 PM",
+        endTime: "15:00 PM",
+        date: "12-03-2022",
+        subject: "Is",
     },
     {
-      startDate: "12-03-2022",
-      endDate: "12-03-2022",
-      class: 3,
-      scheduleBy: "Nilesh Kakde",
-      exams: [{}],
+        startTime: "12:00 PM",
+        endTime: "15:00 PM",
+        date: "13-03-2022",
+        subject: "AI",
     },
     {
-      startDate: "12-03-2022",
-      endDate: "12-03-2022",
-      class: 5,
-      scheduleBy: "Chintan Raval",
-      exams: [{}],
+        startTime: "12:00 PM",
+        endTime: "15:00 PM",
+        date: "14-03-2022",
+        subject: "Dip",
     },
     {
-      startDate: "14-03-2022",
-      endDate: "16-03-2022",
-      class: 6,
-      scheduleBy: "Martin Parmar",
-      exams: [{}],
+        startTime: "12:00 PM",
+        endTime: "15:00 PM",
+        date: "15-03-2022",
+        subject: "Toc",
     },
+    
   ]);
   const [page, setPage] = useState(0);
   const [row, setRow] = useState(2);
@@ -59,10 +56,10 @@ export default function CustomExamTableComponents(props) {
           <TableHead>
             <TableRow>
               <TableCell>No.</TableCell>
-              <TableCell>Start Date</TableCell>
-              <TableCell>End Date</TableCell>
-              <TableCell>Related Class</TableCell>
-              <TableCell>Schedule By</TableCell>
+              <TableCell>Start Time</TableCell>
+              <TableCell>End Time</TableCell>
+              <TableCell>Date</TableCell>
+              <TableCell>Subject</TableCell>
               <TableCell></TableCell>
             </TableRow>
           </TableHead>
@@ -70,10 +67,10 @@ export default function CustomExamTableComponents(props) {
             {Exams.slice(page * row, page * row + row).map((item, index) => (
               <TableRow>
                 <TableCell>{index+1}</TableCell>
-                <TableCell>{item.startDate}</TableCell>
-                <TableCell>{item.endDate}</TableCell>
-                <TableCell>{item.class}</TableCell>
-                <TableCell>{item.scheduleBy}</TableCell>
+                <TableCell>{item.startTime}</TableCell>
+                <TableCell>{item.endTime}</TableCell>
+                <TableCell>{item.date}</TableCell>
+                <TableCell>{item.subject}</TableCell>
                 <TableCell>
                   <IconButton>
                     <EditIcon style={{ color: green[900] }} />

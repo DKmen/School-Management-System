@@ -17,46 +17,47 @@ import AddIcon from "@material-ui/icons/Add";
 
 import CustomDrawerComponents from "../../../Components/Admin/Drawer";
 import CustomExamTableComponents from "../../../Components/Admin/ExamTable";
-
+import ExamFormPropsTextFields from "../../../Components/Admin/ExamMainFrom";
+import ExamtimeMaterialUIPickers from "../../../Components/Admin/Examtime";
 export default function ExamManagementPage(props) {
-  const [Finance, setFinance] = useState([
-    {
-      date: "12-02-2022",
-      description: "Hi this is for purchase for school sports accerices",
-      isExpance: true,
-      amount: 30000,
-    },
-    {
-      date: "12-02-2022",
-      description: "Hi this is for purchase for school sports accerices",
-      isExpance: true,
-      amount: 30000,
-    },
-    {
-      date: "12-02-2022",
-      description: "Hi this is for purchase for school sports accerices",
-      isExpance: false,
-      amount: 30000,
-    },
-    {
-      date: "12-02-2022",
-      description: "Hi this is for purchase for school sports accerices",
-      isExpance: true,
-      amount: 30000,
-    },
-    {
-      date: "12-02-2022",
-      description: "Hi this is for purchase for school sports accerices",
-      isExpance: false,
-      amount: 30000,
-    },
-    {
-      date: "12-02-2022",
-      description: "Hi this is for purchase for school sports accerices",
-      isExpance: true,
-      amount: 30000,
-    },
-  ]);
+  // const [Finance, setFinance] = useState([
+  //   {
+  //     date: "12-02-2022",
+  //     description: "Hi this is for purchase for school sports accerices",
+  //     isExpance: true,
+  //     amount: 30000,
+  //   },
+  //   {
+  //     date: "12-02-2022",
+  //     description: "Hi this is for purchase for school sports accerices",
+  //     isExpance: true,
+  //     amount: 30000,
+  //   },
+  //   {
+  //     date: "12-02-2022",
+  //     description: "Hi this is for purchase for school sports accerices",
+  //     isExpance: false,
+  //     amount: 30000,
+  //   },
+  //   {
+  //     date: "12-02-2022",
+  //     description: "Hi this is for purchase for school sports accerices",
+  //     isExpance: true,
+  //     amount: 30000,
+  //   },
+  //   {
+  //     date: "12-02-2022",
+  //     description: "Hi this is for purchase for school sports accerices",
+  //     isExpance: false,
+  //     amount: 30000,
+  //   },
+  //   {
+  //     date: "12-02-2022",
+  //     description: "Hi this is for purchase for school sports accerices",
+  //     isExpance: true,
+  //     amount: 30000,
+  //   },
+  // ]);
 
   return (
     <>
@@ -75,7 +76,9 @@ export default function ExamManagementPage(props) {
               </Button>
             </Grid>
             <Grid item md={12} sm={12} lg={12} xs={12}>
-              <CustomExamTableComponents />
+              {/* <CustomExamTableComponents /> */}
+              {/* <ExamFormPropsTextFields /> */}
+              <ExamtimeMaterialUIPickers/>
             </Grid>
           </Grid>
         </Box>
