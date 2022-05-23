@@ -1,6 +1,5 @@
 const Material = require('../models/Material');
 const getError = require("../utils/dbErrorHandle");
-
 module.exports = {
     
     getMaterial : async (req, res) => {
@@ -69,6 +68,7 @@ module.exports = {
         try {
             const id = req.teacher._id;
             const materials = await Material.find({teacher : id }).populate(['class', 'subject', 'teacher']);
+            materials.fileData = undefined;
             return res.status(200).json({
                 error : false,
                 data : materials
@@ -80,27 +80,45 @@ module.exports = {
             })
         }
     },
+    getMaterialOnly : async (req, res) => {
+        try {
+            const id = req.params.id;
+            const materials = await Material.findOne({_id:id,teacher:req.teacher._id});
+            if(!materials){
+                return res.status(400).json({
+                    error: true,
+                    message: "materail not found || You are not creator"
+                })
+            }
+            else{
+                res.set('Content-type','application/pdf');
+                res.send(materials.fileData);
+            }
+        } catch (error) {
+            return res.status(400).json({
+                error: true,
+                message:  errMsg.length > 0 ? errMsg : "Could not get material"
+            })
+        }
+    },
 
     addMaterial : async (req, res) => {
         try {
-            const {classId, subjectId, details, fileName, fileData} = req.body;
+            const {classId, subjectId, details, fileName} = req.body;
             const material = Material({
                 class : classId,
                 subject : subjectId,
                 details : details,
                 fileName : fileName,
-                fileData : fileData,
+                fileData : req.file.buffer,
                 teacher : req.teacher._id
             })
 
             await material.save();
-
             return res.status(200).json({
                 error : false,
-                message : "Material added successfully.",
-                data : material
+                message : "Material added successfully."
             })
-
         } catch (error) {
             return res.status(400).json({
                 error: true,
@@ -113,17 +131,16 @@ module.exports = {
         try {
             const {id} = req.params;
             const teacherId = req.teacher._id;
-            const {classId, subjectId, details, fileName, fileData} = req.body;
+            const {classId, subjectId, details, fileName} = req.body;
             const material = await Material.findOneAndUpdate({_id:id,teacher:teacherId},{class : classId,
                 subject : subjectId,
                 details : details,
                 fileName : fileName,
-                fileData : fileData,
+                fileData : req.file.buffer,
                 teacher : teacherId});
             return res.status(200).json({
                 error : false,
                 message : "Material updated successfully.",
-                data : material
             });
         } catch (error) {
             return res.status(400).json({
