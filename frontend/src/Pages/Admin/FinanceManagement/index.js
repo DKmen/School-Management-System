@@ -16,7 +16,7 @@ import {
 import AddIcon from "@material-ui/icons/Add";
 
 import CustomDrawerComponents from "../../../Components/Admin/Drawer";
-
+import FinanceFormPropsTextFields from "../../../Components/Admin/FinanceForm";
 export default function FinanceManagementPage(props) {
   const [Finance, setFinance] = useState([
     {
@@ -61,7 +61,8 @@ export default function FinanceManagementPage(props) {
     <>
       <CustomDrawerComponents>
         <Box mx={2} my={4}>
-          <Grid container spacing={4} justifyContent="space-between">
+          <FinanceFormPropsTextFields/>
+          {/* <Grid container spacing={4} justifyContent="space-between">
             <Grid item sm={12} md={4} lg={4} xl={4}>
               <Button
                 variant="outlined"
@@ -167,7 +168,7 @@ export default function FinanceManagementPage(props) {
               <Typography variant="h6">{`Total Expance is 5000`}</Typography>
               <Typography variant="h6">{`Over All Income is -2000`}</Typography>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Box>
       </CustomDrawerComponents>
     </>

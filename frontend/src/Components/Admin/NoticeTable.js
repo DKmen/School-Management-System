@@ -21,6 +21,20 @@ export default function CustomNoticeTableComponents(props) {
         "hi we annousement event to akcn kas sow wwddd dowdwd oa aakms asmd ede oemdem odm cdncc cjdf iew eq ededn ifef icdd dcicnwie qide id ddi ssmq qk qednd e ekd ekede d kda adkccqi ei",
       class: [1, 5, 3, 2],
     },
+    {
+      no: 2,
+      noticeTitle: "Event update",
+      noticeDetails:
+        "hi we annousement event to akcn kas sow wwddd dowdwd oa aakms asmd ede oemdem odm cdncc cjdf iew eq ededn ifef icdd dcicnwie qide id ddi ssmq qk qednd e ekd ekede d kda adkccqi ei",
+      class: [1, 5, 3, 2,4],
+    },
+    {
+      no: 3,
+      noticeTitle: "Event update",
+      noticeDetails:
+        "hi we annousement event to akcn kas sow wwddd dowdwd oa aakms asmd ede oemdem odm cdncc cjdf iew eq ededn ifef icdd dcicnwie qide id ddi ssmq qk qednd e ekd ekede d kda adkccqi ei",
+      class: [1, 5, 3, 2,4],
+    },
   ]);
   const [page, setPage] = useState(0);
   const [row, setRow] = useState(2);

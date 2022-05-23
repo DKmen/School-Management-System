@@ -3,7 +3,7 @@ import CustomDrawerComponents from "../../../Components/Admin/Drawer";
 
 import AddIcon from "@material-ui/icons/Add";
 import CustomNoticeTableComponents from "../../../Components/Admin/NoticeTable";
-
+import FormPropsTextFields from "../../../Components/Admin/NoticeForm";
 export default function NoticeBordPage(props) {
   return (
     <>
@@ -21,6 +21,7 @@ export default function NoticeBordPage(props) {
               </Button>
             </Grid>
             <Grid item md={12} sm={12} lg={12} xs={12}>
+              {/* <FormPropsTextFields /> */}
               <CustomNoticeTableComponents />
             </Grid>
           </Grid>

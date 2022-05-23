@@ -1,7 +1,8 @@
 import React from "react";
 
 // import FeesManagementPage from "./Pages/Admin/FeesManagement";
-// import FinanceManagementPage from "./Pages/Admin/FinanceManagement";
+import FinanceManagementPage from "./Pages/Admin/FinanceManagement";
+import ExamManagementPage from "./Pages/Admin/ExamManagement";
 // import StudentManagementPage from "./Pages/Admin/StudentManagement";
 // import SubjectManagementPage from "./Pages/Admin/SubjectManagement";
 // import ClassManagementPage from "./Pages/Admin/ClassManagement";
@@ -22,9 +23,9 @@ export default function App() {
       {/* <SubjectManagementPage /> */}
       {/* <FeesManagementPage /> */}
       {/* <FinanceManagementPage /> */}
-      {/* <ExamManagementPage /> */}
+      <ExamManagementPage />
       {/* <TeacherNoticeBordPage /> */}
-      <TeacherClassManagementPage />
+      {/* <TeacherClassManagementPage /> */}
     </>
   );
 }
