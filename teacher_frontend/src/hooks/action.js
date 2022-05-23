@@ -51,7 +51,6 @@ export function FetchNotice(UserName, password) {
                     type: Actions.NOTICE_FETCH,
                     paylode: responceData.data.data
                 })
-                console.log('t')
             }
             dispatch({
                 type: Actions.LOADING_DONE
@@ -66,36 +65,6 @@ export function FetchNotice(UserName, password) {
 }
 
 export function FetchClass() {
-    return async (dispatch) => {
-        try {
-            dispatch({
-                type: Actions.LOADING_ACTIVE
-            })
-            const token = await SecureStore.getItemAsync('teacherToken');
-            const responceData = await axios.get(`${URL.classes}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            if (!responceData.data.error) {
-                dispatch({
-                    type: Actions.CLASS_FETCH,
-                    paylode: responceData.data.data
-                })
-            }
-            dispatch({
-                type: Actions.LOADING_DONE
-            })
-        } catch (error) {
-            console.dir(error)
-            dispatch({
-                type: Actions.LOADING_DONE
-            })
-        }
-    }
-}
-
-export function FetchSubject(classID) {
     return async (dispatch) => {
         try {
             dispatch({

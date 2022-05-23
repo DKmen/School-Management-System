@@ -6,7 +6,7 @@ const tauth = require('../middlewares/teacher')
 
 router.get('/', auth, classCtrl.getClass);
 
-router.get('/class', tauth, classCtrl.getClass);
+router.get('/class', tauth, classCtrl.getClassWithDetails);
 
 router.post('/', auth, classCtrl.addClass);
 

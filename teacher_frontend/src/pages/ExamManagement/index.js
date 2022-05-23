@@ -13,6 +13,8 @@ function ExamManagementPage(props) {
   const [openExamForm, setOpenExamForm] = React.useState(false);
   const [Exams, setExams] = React.useState([]);
 
+  console.log(Exams);
+
   return (
     <ScrollView
       refreshControl={
@@ -34,7 +36,7 @@ function ExamManagementPage(props) {
                 Schedule Exam
               </Button>
             </Box>
-            <CustomExamTable exam={Exams} />
+            {/* <CustomExamTable exam={Exams} /> */}
           </ScrollView>
           <CustomExamForm
             formOpen={setOpenExamForm}

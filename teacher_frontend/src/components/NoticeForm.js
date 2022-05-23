@@ -63,7 +63,7 @@ function CustomNoticeBordForm(props) {
                   mt={1}
                 >
                   {props?.data.Class.map((item) => {
-                    return <Select.Item label={item.Std_Name} value={item._id} />
+                    return <Select.Item label={item.STD} value={item.Class_Id} />
                   })}
                 </Select>
               </FormControl>

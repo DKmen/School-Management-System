@@ -14,14 +14,18 @@ import {
 import { Dimensions } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 
+import * as Actions from "../hooks/action";
+
+import { connect } from "react-redux";
+
 import { AntDesign } from "@expo/vector-icons";
 
-export default function CustomExamForm(props) {
+function CustomExamForm(props) {
   const [startDate, setStartDate] = React.useState("");
   const [displayStartDate, setDisplayStartDate] = React.useState(false);
   const [endDate, setEndDate] = React.useState("");
   const [displayEndDate, setDisplayEndDate] = React.useState(false);
-  const [examClass, setExamClass] = React.useState("");
+  const [examClass, setExamClass] = React.useState({});
 
   const [exams, setExams] = React.useState([]);
   const [displayExams, setDisplayExam] = React.useState(false);
@@ -31,7 +35,13 @@ export default function CustomExamForm(props) {
   const [displayEndTime, setDisplayEndTime] = React.useState(false);
   const [date, setDate] = React.useState("");
   const [displayDate, setDisplayDate] = React.useState(false);
-  const [subject, setSubject] = React.useState("Maths");
+  const [subject, setSubject] = React.useState("");
+
+  console.log(startDate, endDate, examClass, exams);
+
+  React.useEffect(() => {
+    props.fetchClass();
+  }, []);
 
   return (
     <Center>
@@ -42,126 +52,128 @@ export default function CustomExamForm(props) {
         }}
         w={Dimensions.get("window").width}
       >
-        <Modal.Content
-          maxWidth={800}
-          maxHeight={Dimensions.get("window").height * 0.8}
-        >
-          <ScrollView>
-            <Modal.CloseButton />
-            <Modal.Header>Schedule Exam</Modal.Header>
-            <Modal.Body>
-              <ScrollView>
-                <FormControl my={2}>
-                  <FormControl.Label>Select Class</FormControl.Label>
-                  <Select
-                    minWidth="200"
-                    accessibilityLabel="Class"
-                    placeholder="Select Class"
-                    _selectedItem={{
-                      bg: "teal.600",
-                      endIcon: (
-                        <AntDesign name="caretdown" size={24} color="black" />
-                      ),
-                    }}
-                    mt={1}
-                    onValueChange={(item) => setExamClass(item)}
-                  >
-                    <Select.Item label="Class 1" value={1} />
-                    <Select.Item label="Class 2" value={2} />
-                    <Select.Item label="Class 3" value={3} />
-                  </Select>
-                </FormControl>
-                <FormControl my={2}>
-                  <FormControl.Label>Start Date</FormControl.Label>
-                  <Button
-                    variant="outline"
-                    onPress={() => setDisplayStartDate(true)}
-                  >
-                    {startDate
-                      ? `${startDate.toDateString()}`
-                      : "Enter Start Date"}
-                  </Button>
-                  {displayStartDate ? (
-                    <DateTimePicker
-                      value={new Date()}
-                      mode="date"
-                      is24Hour={true}
-                      display="default"
-                      onChange={(event, selectedDate) => {
-                        const currentDate = selectedDate || startDate;
-                        setDisplayStartDate(false);
-                        setStartDate(currentDate);
-                      }}
-                    />
-                  ) : null}
-                </FormControl>
-                <FormControl my={2}>
-                  <FormControl.Label>End Date</FormControl.Label>
-                  <Button
-                    variant="outline"
-                    onPress={() => setDisplayEndDate(true)}
-                  >
-                    {endDate ? `${endDate.toDateString()}` : "Enter End Date"}
-                  </Button>
-                  {displayEndDate ? (
-                    <DateTimePicker
-                      value={new Date()}
-                      mode="date"
-                      is24Hour={true}
-                      minimumDate={startDate}
-                      display="default"
-                      onChange={(event, selectedDate) => {
-                        const currentDate = selectedDate || endDate;
-                        setDisplayEndDate(false);
-                        setEndDate(currentDate);
-                      }}
-                    />
-                  ) : null}
-                </FormControl>
-                <FormControl my={2}>
-                  <Button
-                    variant="outline"
-                    onPress={(_) => setDisplayExam(true)}
-                  >
-                    Add Exams
-                  </Button>
-                </FormControl>
-              </ScrollView>
-              <FormControl my={2}>
+        {props.data.Class.length !== 0 ? (
+          <Modal.Content
+            maxWidth={800}
+            maxHeight={Dimensions.get("window").height * 0.8}
+          >
+            <ScrollView>
+              <Modal.CloseButton />
+              <Modal.Header>Schedule Exam</Modal.Header>
+              <Modal.Body>
                 <ScrollView>
-                  <Box
-                    h={150}
-                    borderWidth={1}
-                    borderColor="blue.400"
-                    borderRadius={4}
-                    py={2}
-                  >
-                    <CustomExamTable exam={exams} />
-                  </Box>
+                  <FormControl my={2}>
+                    <FormControl.Label>Select Class</FormControl.Label>
+                    <Select
+                      minWidth="200"
+                      accessibilityLabel="Class"
+                      placeholder="Select Class"
+                      _selectedItem={{
+                        bg: "teal.600",
+                        endIcon: (
+                          <AntDesign name="caretdown" size={24} color="black" />
+                        ),
+                      }}
+                      mt={1}
+                      onValueChange={(item) => setExamClass(item)}
+                    >
+                      {props.data.Class.map((item) => (
+                        <Select.Item label={item.STD} value={item} />
+                      ))}
+                    </Select>
+                  </FormControl>
+                  <FormControl my={2}>
+                    <FormControl.Label>Start Date</FormControl.Label>
+                    <Button
+                      variant="outline"
+                      onPress={() => setDisplayStartDate(true)}
+                    >
+                      {startDate
+                        ? `${startDate.toDateString()}`
+                        : "Enter Start Date"}
+                    </Button>
+                    {displayStartDate ? (
+                      <DateTimePicker
+                        value={new Date()}
+                        mode="date"
+                        is24Hour={true}
+                        display="default"
+                        onChange={(event, selectedDate) => {
+                          const currentDate = selectedDate || startDate;
+                          setDisplayStartDate(false);
+                          setStartDate(currentDate);
+                        }}
+                      />
+                    ) : null}
+                  </FormControl>
+                  <FormControl my={2}>
+                    <FormControl.Label>End Date</FormControl.Label>
+                    <Button
+                      variant="outline"
+                      onPress={() => setDisplayEndDate(true)}
+                    >
+                      {endDate ? `${endDate.toDateString()}` : "Enter End Date"}
+                    </Button>
+                    {displayEndDate ? (
+                      <DateTimePicker
+                        value={new Date()}
+                        mode="date"
+                        is24Hour={true}
+                        minimumDate={startDate}
+                        display="default"
+                        onChange={(event, selectedDate) => {
+                          const currentDate = selectedDate || endDate;
+                          setDisplayEndDate(false);
+                          setEndDate(currentDate);
+                        }}
+                      />
+                    ) : null}
+                  </FormControl>
+                  <FormControl my={2}>
+                    <Button
+                      variant="outline"
+                      onPress={(_) => setDisplayExam(true)}
+                    >
+                      Add Exams
+                    </Button>
+                  </FormControl>
                 </ScrollView>
-              </FormControl>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button
-                onPress={(_) => {
-                  props.addExams([
-                    ...props.data,
-                    {
-                      startDate,
-                      endDate,
-                      class: examClass,
-                      prepareBy: "Martin Parmer",
-                      exams,
-                    },
-                  ]);
-                  props.formOpen(false);
-                }}
-              >
-                Save Exam
-              </Button>
-            </Modal.Footer>
-          </ScrollView>
-        </Modal.Content>
+                <FormControl my={2}>
+                  <ScrollView>
+                    <Box
+                      h={150}
+                      borderWidth={1}
+                      borderColor="blue.400"
+                      borderRadius={4}
+                      py={2}
+                    >
+                      <CustomExamTable exam={exams} />
+                    </Box>
+                  </ScrollView>
+                </FormControl>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button
+                  onPress={(_) => {
+                    props.addExams([
+                      {
+                        startDate,
+                        endDate,
+                        classId: examClass?.Class_Id,
+                        exams,
+                      },
+                    ]);
+                    props.formOpen(false);
+                  }}
+                >
+                  Save Exam
+                </Button>
+              </Modal.Footer>
+            </ScrollView>
+          </Modal.Content>
+        ) : (
+          <></>
+        )}
       </Modal>
       <Modal
         isOpen={displayExams}
@@ -211,7 +223,7 @@ export default function CustomExamForm(props) {
                 >
                   {endTime
                     ? `${endTime.getHours()}:${endTime.getMinutes()}`
-                    : "Enter Start Time"}
+                    : "Enter End Time"}
                 </Button>
                 {displayEndTime ? (
                   <DateTimePicker
@@ -263,9 +275,9 @@ export default function CustomExamForm(props) {
                   onValueChange={(itemValue) => setSubject(itemValue)}
                   mt={1}
                 >
-                  <Select.Item label="Maths" value={"Maths"} />
-                  <Select.Item label="Physics" value={"Physic"} />
-                  <Select.Item label="Science" value={"Science"} />
+                  {examClass?.Subjects?.map((item) => (
+                    <Select.Item label={item.Subject_Name} value={item._id} />
+                  ))}
                 </Select>
               </FormControl>
             </Modal.Body>
@@ -297,6 +309,20 @@ export default function CustomExamForm(props) {
     </Center>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    data: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchClass: () => dispatch(Actions.FetchClass()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomExamForm);
 
 function CustomExamTable(props) {
   return (
