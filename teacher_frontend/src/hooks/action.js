@@ -125,3 +125,35 @@ export function CreateNotice(data) {
         }
     }
 }
+
+export function CreateNotice(data) {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: Actions.LOADING_ACTIVE
+            })
+            const token = await SecureStore.getItemAsync('teacherToken');
+            const responceData = await axios.post(`${URL.exams}`, {
+                ...data
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            if (!responceData.data.error) {
+                dispatch({
+                    type: Actions.EXAM_ADD,
+                    paylode: data
+                })
+            }
+            dispatch({
+                type: Actions.LOADING_DONE
+            })
+        } catch (error) {
+            console.dir(error)
+            dispatch({
+                type: Actions.LOADING_DONE
+            })
+        }
+    }
+}
