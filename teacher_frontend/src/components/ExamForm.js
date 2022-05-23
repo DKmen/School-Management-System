@@ -37,8 +37,6 @@ function CustomExamForm(props) {
   const [displayDate, setDisplayDate] = React.useState(false);
   const [subject, setSubject] = React.useState("");
 
-  console.log(startDate, endDate, examClass, exams);
-
   React.useEffect(() => {
     props.fetchClass();
   }, []);
@@ -155,14 +153,12 @@ function CustomExamForm(props) {
               <Modal.Footer>
                 <Button
                   onPress={(_) => {
-                    props.addExams([
-                      {
-                        startDate,
-                        endDate,
-                        classId: examClass?.Class_Id,
-                        exams,
-                      },
-                    ]);
+                    props.addExam({
+                      startDate,
+                      endDate,
+                      classId: examClass?.Class_Id,
+                      exams,
+                    })
                     props.formOpen(false);
                   }}
                 >
@@ -319,6 +315,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchClass: () => dispatch(Actions.FetchClass()),
+    addExam: (data) => dispatch(Actions.CreateExam(data)),
   };
 };
 

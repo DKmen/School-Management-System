@@ -11,16 +11,13 @@ import CustomExamForm from "../../components/ExamForm";
 
 function ExamManagementPage(props) {
   const [openExamForm, setOpenExamForm] = React.useState(false);
-  const [Exams, setExams] = React.useState([]);
-
-  console.log(Exams);
 
   return (
     <ScrollView
       refreshControl={
         <RefreshControl
           refreshing={props.data.Loading}
-          onRefresh={() => props.fetchNotice()}
+          onRefresh={() => props.fetchExam()}
         />
       }>
       <Box>
@@ -36,13 +33,11 @@ function ExamManagementPage(props) {
                 Schedule Exam
               </Button>
             </Box>
-            {/* <CustomExamTable exam={Exams} /> */}
+            <CustomExamTable />
           </ScrollView>
           <CustomExamForm
             formOpen={setOpenExamForm}
             isOpen={openExamForm}
-            addExams={setExams}
-            data={Exams}
           />
         </Box>
       </Box>
@@ -58,7 +53,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNotice: () => dispatch(Actions.FetchNotice()),
+    addExam: () => dispatch(Actions.CreateExam(data)),
+    fetchExam: () => dispatch(Actions.FetchExam())
   };
 };
 

@@ -6,7 +6,6 @@ export const NOTICE_ADD = "NOTICE_ADD";
 export const CLASS_FETCH = "CLASS_FETCH";
 export const EXAM_FETCH = "EXAM_FETCH";
 export const EXAM_ADD = "EXAM_ADD";
-export const SUBJECT_FETCH = "SUBJECT_FETCH";
 
 
 

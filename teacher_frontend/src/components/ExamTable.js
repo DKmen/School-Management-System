@@ -4,16 +4,26 @@ import {
   Box,
   Button,
   Divider,
-  ScrollView,
   Text,
   Modal,
   Center,
 } from "native-base";
-import { Dimensions } from "react-native";
+import { Dimensions, ScrollView } from "react-native";
 
-export default function CustomExamTable(props) {
+import * as Actions from "../hooks/action";
+
+import { connect } from "react-redux";
+
+function CustomExamTable(props) {
   const [showModal, setShowModal] = React.useState(false);
   const [currentExam, setCurrentExam] = React.useState({});
+
+  console.log(props.data);
+
+  React.useEffect(() => {
+    props.fetchExam();
+  }, [])
+
   return (
     <Box my={2} p={1} maxHeight={Dimensions.get("screen").height * 0.6}>
       <ScrollView>
@@ -47,7 +57,7 @@ export default function CustomExamTable(props) {
               </Box>
             </Box>
             <Divider />
-            {props.exam.map((item, index) => (
+            {props.data.Exams.map((item, index) => (
               <>
                 <Box flexDir="row" px={2} py={2}>
                   <Box w={50} alignItems="center">
@@ -55,19 +65,19 @@ export default function CustomExamTable(props) {
                   </Box>
                   <Box w={150} alignItems="center">
                     <Text fontSize="md">
-                      {item.startDate.toLocaleDateString()}
+                      {new Date(item.startDate).toLocaleDateString()}
                     </Text>
                   </Box>
                   <Box w={100} alignItems="center">
                     <Text fontSize="md">
-                      {item.endDate.toLocaleDateString()}
+                      {new Date(item.endDate).toLocaleDateString()}
                     </Text>
                   </Box>
                   <Box w={100} alignItems="center">
                     <Text fontSize="md">{item.class}</Text>
                   </Box>
                   <Box w={150} alignItems="center">
-                    <Text fontSize="md">{item.prepareBy}</Text>
+                    <Text fontSize="md">{item.teacher}</Text>
                   </Box>
                   <Box w={100} alignItems="center">
                     <Button
@@ -75,7 +85,7 @@ export default function CustomExamTable(props) {
                       colorScheme="primary"
                       py={1}
                       onPress={(_) => {
-                        setCurrentExam(props.exam[index]);
+                        setCurrentExam(props.data.Exams[index]);
                         setShowModal(true);
                       }}
                     >
@@ -137,14 +147,14 @@ export default function CustomExamTable(props) {
                             <Text fontSize="md">{index + 1}</Text>
                           </Box>
                           <Box w={150} alignItems="center">
-                            <Text fontSize="md">{`${item.startTime.getHours()}:${item.startTime.getMinutes()}`}</Text>
+                            <Text fontSize="md">{new Date(item.startTime).toLocaleTimeString()}</Text>
                           </Box>
                           <Box w={100} alignItems="center">
-                            <Text fontSize="md">{`${item.endTime.getHours()}:${item.endTime.getMinutes()}`}</Text>
+                            <Text fontSize="md">{new Date(item.endTime).toLocaleTimeString()}</Text>
                           </Box>
                           <Box w={100} alignItems="center">
                             <Text fontSize="md">
-                              {item.date.toLocaleDateString()}
+                              {new Date(item.date).toLocaleDateString()}
                             </Text>
                           </Box>
                           <Box w={150} alignItems="center">
@@ -164,3 +174,17 @@ export default function CustomExamTable(props) {
     </Box>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    data: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchExam: () => dispatch(Actions.FetchExam()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CustomExamTable);

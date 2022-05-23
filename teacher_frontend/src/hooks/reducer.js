@@ -67,5 +67,6 @@ export default combineReducers({
     Teacher,
     Notice,
     Loading,
-    Class
+    Class,
+    Exams
 });

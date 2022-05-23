@@ -126,7 +126,7 @@ export function CreateNotice(data) {
     }
 }
 
-export function CreateNotice(data) {
+export function CreateExam(data) {
     return async (dispatch) => {
         try {
             dispatch({
@@ -143,7 +143,38 @@ export function CreateNotice(data) {
             if (!responceData.data.error) {
                 dispatch({
                     type: Actions.EXAM_ADD,
-                    paylode: data
+                    paylode: responceData.data.message
+                })
+            }
+            dispatch({
+                type: Actions.LOADING_DONE
+            })
+        } catch (error) {
+            console.dir(error)
+            dispatch({
+                type: Actions.LOADING_DONE
+            })
+        }
+    }
+}
+
+export function FetchExam() {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: Actions.LOADING_ACTIVE
+            })
+            const token = await SecureStore.getItemAsync('teacherToken');
+            const responceData = await axios.get(`${URL.exams}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(responceData.data);
+            if (!responceData.data.error) {
+                dispatch({
+                    type: Actions.EXAM_FETCH,
+                    paylode: responceData.data.data
                 })
             }
             dispatch({
