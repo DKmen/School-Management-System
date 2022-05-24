@@ -64,7 +64,11 @@ module.exports = {
     },
     getTeachers :async(req,res)=>{
         try{
-            const teachers = await Teacher.find({}).populate(['Subjects_Id.Subject_Id'])
+            const teachers = await Teacher.find({}).populate({path:'Subjects_Id.Subject_Id',
+            populate:{
+                path:'Class_Id'
+            }
+        })
             return res.status(200).json({
                 error : false,
                 data : teachers

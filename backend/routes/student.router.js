@@ -4,7 +4,7 @@ const studentCtrl = require("../controllers/student.controller");
 const sauth = require('../middlewares/student')
 const auth = require('../middlewares/authentication')
 
-router.get('/',auth ,studentCtrl.getStudentsByClass);
+router.get('/:id',auth ,studentCtrl.getStudentsByClass);
 
 router.get('/stdid',auth, studentCtrl.getStudentByStudentID);
 
