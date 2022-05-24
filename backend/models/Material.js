@@ -19,7 +19,7 @@ const materialSchema = mongoose.Schema({
         required : [true, "File name is required"]
     },
     fileData : {
-        type : String,
+        type : Buffer,
         required : [true, "File data is required"]
     },
     teacher : {

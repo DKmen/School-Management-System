@@ -30,6 +30,8 @@ export default function CustomClassTableComponents(props) {
   const [page, setPage] = useState(0);
   const [row, setRow] = useState(2);
 
+  console.log(props.classes);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -45,13 +47,13 @@ export default function CustomClassTableComponents(props) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Classes.slice(page * row, page * row + row).map((item) => (
+            {props.classes.slice(page * row, page * row + row).map((item) => (
               <TableRow>
-                <TableCell>{item.std}</TableCell>
-                <TableCell>{item.totalStudent}</TableCell>
-                <TableCell>{item.totalTeacher}</TableCell>
-                <TableCell>{item.feesPerStudent}</TableCell>
-                <TableCell>{item.totalSubject}</TableCell>
+                <TableCell>{item.STD}</TableCell>
+                <TableCell>{item.totalStudents}</TableCell>
+                <TableCell>{item.totalTeachers}</TableCell>
+                <TableCell>{item.Fees_Per_Student}</TableCell>
+                <TableCell>{item.totalSubjects}</TableCell>
                 <TableCell>
                   <IconButton>
                     <EditIcon style={{ color: green[900] }} />
