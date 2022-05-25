@@ -1,51 +1,89 @@
 import React from "react";
 
-import { Box, Button, ScrollView, Select, Text, TextArea } from "native-base";
+import {
+  Box,
+  Button,
+  ScrollView,
+  Select,
+  FormControl,
+  TextArea,
+} from "native-base";
+import * as DocumentPicker from "expo-document-picker";
+
+import { connect } from "react-redux";
+import * as Actions from "../../hooks/action";
 
 import { AntDesign } from "@expo/vector-icons";
 
-export default function ClassManagementPage() {
+function ClassManagementPage(props) {
+  const [examClass, setExamClass] = React.useState({});
+  const [subject, setSubject] = React.useState("");
+  const [file, setFiles] = React.useState("");
+
+  React.useState(() => {
+    props.fetchClass();
+  }, []);
+
   return (
     <Box>
       <Box p={2}>
         <ScrollView>
           <Box my={2}>
-            <Select
-              minWidth="200"
-              accessibilityLabel="Class"
-              placeholder="Select Class"
-              _selectedItem={{
-                bg: "teal.600",
-                endIcon: <AntDesign name="caretdown" size={24} color="black" />,
-              }}
-              mt={1}
-            >
-              <Select.Item label="Class 1" value={1} />
-              <Select.Item label="Class 2" value={2} />
-              <Select.Item label="Class 3" value={3} />
-            </Select>
+            <FormControl my={2}>
+              <FormControl.Label>Select Class</FormControl.Label>
+              <Select
+                minWidth="200"
+                accessibilityLabel="Class"
+                placeholder="Select Class"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: (
+                    <AntDesign name="caretdown" size={24} color="black" />
+                  ),
+                }}
+                mt={1}
+                onValueChange={(item) => setExamClass(item)}
+              >
+                {props.data.Class.map((item) => (
+                  <Select.Item label={item.STD} value={item} />
+                ))}
+              </Select>
+            </FormControl>
           </Box>
           <Box my={2}>
-            <Select
-              minWidth="200"
-              accessibilityLabel="Subject"
-              placeholder="Select Subject"
-              _selectedItem={{
-                bg: "teal.600",
-                endIcon: <AntDesign name="caretdown" size={24} color="black" />,
-              }}
-              mt={1}
-            >
-              <Select.Item label="Mathematic" value={1} />
-              <Select.Item label="Science" value={2} />
-              <Select.Item label="Physics" value={3} />
-            </Select>
+            <FormControl my={2}>
+              <FormControl.Label>Select Subject</FormControl.Label>
+              <Select
+                minWidth="200"
+                accessibilityLabel="Class"
+                placeholder="Select Class"
+                _selectedItem={{
+                  bg: "teal.600",
+                  endIcon: (
+                    <AntDesign name="caretdown" size={24} color="black" />
+                  ),
+                }}
+                onValueChange={(itemValue) => setSubject(itemValue)}
+                mt={1}
+              >
+                {examClass?.Subjects?.map((item) => (
+                  <Select.Item label={item.Subject_Name} value={item._id} />
+                ))}
+              </Select>
+            </FormControl>
           </Box>
           <Box my={2}>
             <TextArea placeholder="Enter material Details" h={100} />
           </Box>
           <Box my={2}>
-            <Button variant="outline" colorScheme="primary" mb={2}>
+            <Button variant="outline" colorScheme="primary" mb={2} onPress={async () => {
+              try {
+                let result = await DocumentPicker.getDocumentAsync({});
+                setFiles(result);
+              } catch (err) {
+                console.warn(err);
+              }
+            }}>
               Uplode File
             </Button>
           </Box>
@@ -59,3 +97,20 @@ export default function ClassManagementPage() {
     </Box>
   );
 }
+
+const mapStateToProps = (state) => {
+  return {
+    data: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchClass: () => dispatch(Actions.FetchClass()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ClassManagementPage);

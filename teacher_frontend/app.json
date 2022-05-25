@@ -18,8 +18,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "usesIcloudStorage": true,
+      "bundleIdentifier": "com.yourname.yourapp"
     },
+    "plugins": ["expo-document-picker"],
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
