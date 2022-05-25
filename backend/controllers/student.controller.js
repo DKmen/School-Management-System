@@ -81,8 +81,7 @@ module.exports = {
     getStudentsByClass : async (req, res) => {
         try {
             //add year field in class model
-            const { classId } = req.body;
-            const students = await Student.find({ class : { _id : classId } }).populate('class');
+            const students = await Student.find({ class : { _id : req.params.id } }).populate('class');
             return res.status(200).json({
                 error : false,
                 data : students

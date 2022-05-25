@@ -7,7 +7,7 @@ module.exports = {
 
     getSubjectById: async (req, res) => {
         try {
-            const subjects = await Subject.find({ Class_Id: req.params.id });
+            const subjects = await Subject.find({ Class_Id: req.params.id }).populate('Class_Id');
             return res.status(200).json({
                 error: false,
                 data: subjects
@@ -22,7 +22,7 @@ module.exports = {
     },
     getSubject: async (req, res) => {
         try {
-            const subjects = await Subject.find({});
+            const subjects = await Subject.find({}).populate('Class_Id');;
             return res.status(200).json({
                 error: false,
                 data: subjects
